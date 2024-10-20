@@ -1,9 +1,9 @@
 
 
-function Trnsacs() {
+function Transacs() {
     <>
 
     </>
 }
 
-export default Trnsacs;
+export default Transacs;
