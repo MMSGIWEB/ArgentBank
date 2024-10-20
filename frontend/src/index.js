@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // import User from './pages/User';
-import SignIn from './pages/SignIn';
+import SignIn from './pages/signIn';
+import SignUp from './pages/signUp';
+import User from './pages/user';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -20,21 +22,22 @@ const router = createBrowserRouter([
       <>
         <SignIn />
       </>
+  },
+
+  {
+    path: "/user/:id",
+    element:
+      <>
+        <User />
+      </>
+  },
+  {
+    path: "/signUp",
+    element:
+      <>
+        <SignUp />
+      </>
   }
-  // {//chemin avec paramètre URL avec id unique
-  //   path: "/fiche/:id",
-  //   element:
-  //     <>
-  //       <Fiche />
-  //     </>
-  // },
-  // {
-  //   path: "/404",
-  //   element:
-  //     <>
-  //       <Error />
-  //     </>
-  // }
 ])
 
 

@@ -1,7 +1,8 @@
+import logo from "../assets/img/argentBankLogo.png";
+import { NavLink } from "react-router-dom";
 import Navbar from "../components/navbar/navbar";
 
-
-function SignIn() {
+function SignUp() {
     return (
         <>
             <nav className="main-nav">
@@ -10,8 +11,16 @@ function SignIn() {
             <main className="main bg-dark">
                 <section className="sign-in-content">
                     <i className="fa fa-user-circle sign-in-icon"></i>
-                    <h1>Sign In</h1>
+                    <h1>Sign Up</h1>
                     <form>
+                        <div className="input-wrapper">
+                            <label htmlFor="firstname">Username</label
+                            ><input type="text" id="firstname" />
+                        </div>
+                        <div className="input-wrapper">
+                            <label htmlFor="lastname">Username</label
+                            ><input type="text" id="lastname" />
+                        </div>
                         <div className="input-wrapper">
                             <label htmlFor="username">Username</label
                             ><input type="text" id="username" />
@@ -37,4 +46,4 @@ function SignIn() {
     )
 }
 
-export default SignIn;
+export default SignUp;

@@ -1,28 +1,15 @@
-import logo from "../assets/img/argentBankLogo.png";
 import chatIcon from '../assets/img/icon-chat.png';
 import iconMoney from '../assets/img/icon-money.png';
 import iconSecur from '../assets/img/icon-security.png';
 import '../App.css';
-import { NavLink } from 'react-router-dom';
+import logo from "../assets/img/argentBankLogo.png";
+import Navbar from '../components/navbar/navbar';
 
 function Home() {
     return (
         <>
             <nav className="main-nav">
-                <NavLink to="/" className="main-nav-logo">
-                    <img
-                        className="main-nav-logo-image"
-                        src={logo}
-                        alt="Argent Bank Logo"
-                    />
-                    <h1 className="sr-only">Argent Bank</h1>
-                </NavLink>
-                <div>
-                    <NavLink to="/signIn" className="main-nav-item">
-                        <i className="fa fa-user-circle"></i>
-                        Sign In
-                    </NavLink>
-                </div>
+                <Navbar />
             </nav>
             <main>
                 <div className="hero">
