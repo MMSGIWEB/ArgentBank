@@ -5,7 +5,7 @@ import logo from "../../assets/img/argentBankLogo.png";
 
 function Navbar() {
     return (
-        <>
+        <nav className="main-nav">
             <NavLink to="/" className="main-nav-logo">
                 <img
                     className="main-nav-logo-image"
@@ -23,7 +23,7 @@ function Navbar() {
                     Sign Up
                 </NavLink>
             </div>
-        </>
+        </nav>
     )
 
 }

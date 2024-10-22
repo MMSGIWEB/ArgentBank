@@ -7,8 +7,7 @@ import User from './pages/user';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import BankStats from './pages/bankStats';
-import UserEdit from './components/user/userEdit';
+import TransacEditMode from './components/bankStatements/tEditMode';
 
 
 const router = createBrowserRouter([
@@ -43,14 +42,7 @@ const router = createBrowserRouter([
     path: "/bankStatements",
     element:
       <>
-        <BankStats />
-      </>
-  },
-  {
-    path: "/user/edit",
-    element:
-      <>
-        <UserEdit />
+        <TransacEditMode />
       </>
   }
 ])

@@ -8,9 +8,7 @@ import Navbar from '../components/navbar/navbar';
 function Home() {
     return (
         <>
-            <nav className="main-nav">
-                <Navbar />
-            </nav>
+            <Navbar />
             <main>
                 <div className="hero">
                     <section className="hero-content">

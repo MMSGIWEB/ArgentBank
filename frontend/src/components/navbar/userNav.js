@@ -1,35 +1,35 @@
 import { NavLink } from "react-router-dom";
 import "./style.css";
-import logo from "../../assets/img/argentBankLogo.png";
+import logo from "../../assets/img/userLogo.png";
 
 
 function UserNav({ userName }) {
     return (
-        <>
-            <NavLink to="/" className="main-nav-logo">
+        <nav className="main-nav">
+            <div className="main-nav-logo">
                 <img
                     className="main-nav-logo-image"
                     src={logo}
                     alt="Argent Bank Logo"
                 />
                 <h1 className="sr-only">Argent Bank</h1>
-            </NavLink>
+            </div>
             <div className="user-nav">
-                <NavLink to="/user/edit" className="user-name">
-                    userName
-                    {/* {userName} */}
-                </NavLink>
-                <NavLink to="/signIn" className="main-nav-item">
+                <div className="user-name">
+                    {userName}
+                </div>
+                {/* chemin vers profile avant édition? */}
+                <NavLink to="/user" className="main-nav-item">
                     <i className="fa-regular fa-user"></i>
                 </NavLink>
-                <NavLink to="/signUp" className="main-nav-item">
+                <button to="/user/edit" className="main-nav-item">
                     <i className="fa-solid fa-gear"></i>
-                </NavLink>
+                </button>
                 <NavLink to="/">
                     <i className="fa-solid fa-power-off"></i>
                 </NavLink>
             </div>
-        </>
+        </nav>
     )
 
 }

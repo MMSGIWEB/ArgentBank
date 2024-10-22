@@ -20,13 +20,7 @@ html {
   .bg-dark {
     background-color: #12002b;
   }
-  
-  .main-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 20px;
-  }
+
   
   .hero {
     background-image: url('../src/assets/img/bank-tree.jpeg');

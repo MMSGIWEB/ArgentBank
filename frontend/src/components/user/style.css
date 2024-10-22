@@ -1,0 +1,13 @@
+.edit-username, .edit-username-form, .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.form div {
+    display: flex;
+    gap: 1em;
+}
+

@@ -1,4 +1,3 @@
-import logo from "../assets/img/argentBankLogo.png";
 import { NavLink } from "react-router-dom";
 import Navbar from "../components/navbar/navbar";
 

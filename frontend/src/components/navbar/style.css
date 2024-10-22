@@ -12,6 +12,13 @@
   white-space: nowrap !important; /* 3 */
 }
 
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+}
+
 .main-nav a {
   font-weight: bold;
   color: #2c3e50;
@@ -51,7 +58,7 @@
 }
 
 .user-name {
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: 400 !important;
   text-decoration: none;
   font-family: 'Roboto', sans-serif;
@@ -65,9 +72,22 @@
 }
 
 .fa-user {
-  font-size: 1.5em;
+  font-size: 1.3em;
   border-radius: 100%;
   padding: .3em .4em;
   background: #44a270f5;
   color: #FFFFFF;
+}
+
+.user-nav i {
+  transition: transform 0.5s;
+}
+
+.user-nav i:hover {
+  transform: scale(1.15);
+}
+
+.main-nav button {
+  background: transparent;
+  border: none;
 }
