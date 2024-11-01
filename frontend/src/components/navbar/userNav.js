@@ -5,8 +5,8 @@ import logo from "../../assets/img/userLogo.png";
 
 function UserNav({ userName }) {
     return (
-        <nav className="main-nav">
-            <div className="main-nav-logo">
+        <nav className="main-nav user-main-nav">
+            <div className="main-nav-logo user-logo">
                 <img
                     className="main-nav-logo-image"
                     src={logo}

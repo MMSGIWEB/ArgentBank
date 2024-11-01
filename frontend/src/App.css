@@ -18,7 +18,7 @@ html {
   }
   
   .bg-dark {
-    background-color: #12002b;
+    background-color: #fff;
   }
 
   
@@ -170,8 +170,7 @@ html {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid black;
-    background-color: #fff;
+    /* border: 1px solid black; */
     width: 80%;
     margin: 0 auto;
     flex-direction: column;
@@ -181,6 +180,10 @@ html {
     margin-bottom: 2rem;
   }
   
+  .account-title, .account-amount, .account-amount-description {
+    color: #fff;
+  }
+
   .account-amount {
     margin: 0;
     font-size: 2.5rem;
@@ -223,8 +226,7 @@ html {
     font-size: 1.1rem;
     font-weight: bold;
     margin-top: 1rem;
-    border-color: #44a270f5;
-    background-color: #44a270f5;
+ 
     color: #fff;
   }
   

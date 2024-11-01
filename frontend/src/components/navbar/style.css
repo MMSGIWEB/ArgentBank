@@ -51,10 +51,21 @@
   width: 200px;
 }
 
+/*** USER ***/
+.user-main-nav {
+  padding: 5px 0;
+  gap: 50%;
+}
+
+.user-logo {
+  margin-left: auto;
+}
+
 .user-nav {
   display: flex;
   align-items: center;
   gap: 1em;
+  margin-right: auto;
 }
 
 .user-name {

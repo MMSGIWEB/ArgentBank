@@ -7,7 +7,7 @@ import User from './pages/user';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import TransacEditMode from './components/bankStatements/tEditMode';
+import Transactions from './pages/Transactions';
 
 
 const router = createBrowserRouter([
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
     path: "/bankStatements",
     element:
       <>
-        <TransacEditMode />
+        <Transactions />
       </>
   }
 ])
