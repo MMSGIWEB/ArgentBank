@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux'
+
 import SignIn from './pages/signIn';
 import SignUp from './pages/signUp';
 import User from './pages/user';
-import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 import Transactions from './pages/Transactions';
 
 
@@ -53,12 +53,15 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   //composant dans 'react-router-dom' qui enveloppe l'appli afin de gérer les routes
   <React.StrictMode>
-    {/* //objet router en tant que prop */}
+    {/* <Provider store={store}> */}
+
+    {/* store={store} -- store fait réf à la rootStore que l'on crée pour stocker les "actions/fonctions" via redux + on l'importe plus haut*/}
     <RouterProvider router={router} />
-  </React.StrictMode>
+    {/* /</Provider> */}
+  </React.StrictMode >
+
 );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
