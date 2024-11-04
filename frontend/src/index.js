@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux'
-
 import SignIn from './pages/signIn';
 import SignUp from './pages/signUp';
 import User from './pages/user';
-import App from './App';
+import App from './app/App';
 import Transactions from './pages/Transactions';
+import store from './reduxStore/store';
 
 
 const router = createBrowserRouter([
@@ -53,11 +53,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   //composant dans 'react-router-dom' qui enveloppe l'appli afin de gérer les routes
   <React.StrictMode>
-    {/* <Provider store={store}> */}
+    <Provider store={store}>
 
-    {/* store={store} -- store fait réf à la rootStore que l'on crée pour stocker les "actions/fonctions" via redux + on l'importe plus haut*/}
-    <RouterProvider router={router} />
-    {/* /</Provider> */}
+      {/* store={store} -- store fait réf à la rootStore que l'on crée pour stocker les "actions/fonctions" via redux + on l'importe plus haut*/}
+      <RouterProvider router={router} />
+      /</Provider>
   </React.StrictMode >
 
 );

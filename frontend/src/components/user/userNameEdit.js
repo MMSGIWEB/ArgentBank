@@ -18,15 +18,15 @@ function UsernameEditForm({ firstname, lastname }) {
     //ici ajouter la v du username courant
     const [username, setUsername] = useState('');
     // la v du nouveau 'username'
-    const [newUsername, setNewUsername] = useState('');
+    const [newUsername, setNewUsername] = useState(username);
     //actions au changement du username
-    useEffect(() => {
-        // Mettre à jour le "nom d'utilisateur actuel" après la soumission du formulaire
-        //=> if response
-        if (!setEdit) {
-            username(newUsername);
-        }
-    }, []);
+    // useEffect(() => {
+    // Mettre à jour le "nom d'utilisateur actuel" après la soumission du formulaire
+    //=> if response
+    // if ("si .. existe bien alors nv nom") {
+    // username();
+    // }
+    // }, []);
 
     // const handleEditClick = () => {
     //     setEdit(true);
@@ -64,7 +64,7 @@ function UsernameEditForm({ firstname, lastname }) {
 
     return (
         <>
-            <UserNav userName={username} />
+            <UserNav userName={"mettre la const/fonction du resultat du newUserName"} />
             {/* voir pour v userName={} */}
             {!toEdit ? (
                 <>
