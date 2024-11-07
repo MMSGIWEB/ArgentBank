@@ -9,8 +9,8 @@ function UserHomePage() {
             <h2 className="sr-only">Accounts</h2>
             <section className="account">
                 <div className="account-content-wrapper">
-                    <h3 className="account-title">Argent Bank Checking (x3448)</h3>
-                    <p className="account-amount">$48,049.43</p>
+                    <h3 className="account-title">Argent Bank Checking (x8349)</h3>
+                    <p className="account-amount">$2,082.79</p>
                     <p className="account-amount-description">Available Balance</p>
                 </div>
                 <NavLink to="/bankStatements" className="account-content-wrapper cta">
@@ -21,8 +21,8 @@ function UserHomePage() {
             </section>
             <section className="account">
                 <div className="account-content-wrapper">
-                    <h3 className="account-title">Argent Bank Savings (x3448)</h3>
-                    <p className="account-amount">$48,049.43</p>
+                    <h3 className="account-title">Argent Bank Savings (x6712)</h3>
+                    <p className="account-amount">$10,928.42</p>
                     <p className="account-amount-description">Available Balance</p>
                 </div>
                 <NavLink to="/bankStatements" className="account-content-wrapper cta">
@@ -33,8 +33,8 @@ function UserHomePage() {
             </section>
             <section className="account">
                 <div className="account-content-wrapper">
-                    <h3 className="account-title">Argent Bank Credit Card (x3448)</h3>
-                    <p className="account-amount">$48,049.43</p>
+                    <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
+                    <p className="account-amount">$1184.30</p>
                     <p className="account-amount-description">Current Balance</p>
                 </div>
                 <NavLink to="/bankStatements" className="account-content-wrapper cta">

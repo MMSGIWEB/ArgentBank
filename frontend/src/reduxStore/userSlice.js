@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 //INITIAL STATE
 const initialState = {
@@ -33,7 +33,7 @@ export const modify = createAsyncThunk('userModify', async (userData, thunkAPI) 
             },
             body: JSON.stringify(userData),
         })
-        const data = awaitresponse.json()
+        const data = await response.json()
         if (!response.ok) throw new Error(data.message || 'Failed to modify')
         return data.user
     } catch (error) {

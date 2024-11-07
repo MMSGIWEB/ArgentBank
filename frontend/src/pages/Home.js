@@ -1,8 +1,7 @@
 import chatIcon from '../assets/img/icon-chat.png';
 import iconMoney from '../assets/img/icon-money.png';
 import iconSecur from '../assets/img/icon-security.png';
-import '../App.css';
-import logo from "../assets/img/argentBankLogo.png";
+import '../app/App.css';
 import Navbar from '../components/navbar/navbar';
 
 function Home() {
