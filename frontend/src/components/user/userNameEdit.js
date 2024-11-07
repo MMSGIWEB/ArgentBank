@@ -1,110 +1,83 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import './style.css';
+import { modify } from "../../reduxStore/userSlice";
 
-function UsernameEditForm({ firstname, lastname }) {
-    //EDITION DU NOM D'UTILISATEUR
+function UsernameEditForm() {
+    // Accéder aux données de l’utilisateur dans le state global
+    const dispatch = useDispatch();
+    const { data: user } = useSelector((state) => state.user);
+    const firstname = user?.firstname || '';
+    const lastname = user?.lastname || '';
+    const currentUsername = user?.username || '';
 
-    //état du btn 'edit name' "vide"
-    const [toEdit, setEdit] = useState('')
-    //ouverture + fermeture du cadre d'édition
+    // État local pour l'édition
+    const [toEdit, setEdit] = useState(false);
+    const [username, setUsername] = useState(currentUsername);
+
+    // Ouverture/Fermeture du mode édition
     const openAndCloseEdit = () => {
-        setEdit(!toEdit)
-    }
+        setEdit(!toEdit);
+    };
 
-
-    // INFOS UTILISATEUR
-
-    //ici ajouter la v du username courant
-    const [username, setUsername] = useState('');
-    // la v du nouveau 'username'
-    const [newUsername, setNewUsername] = useState(username);
-    //actions au changement du username
-    // useEffect(() => {
-    // Mettre à jour le "nom d'utilisateur actuel" après la soumission du formulaire
-    //=> if response
-    // if ("si .. existe bien alors nv nom") {
-    // username();
-    // }
-    // }, []);
-
-    // const handleEditClick = () => {
-    //     setEdit(true);
-    // };
-
-    // utiliser useProfile(hook perso?) pour recup les données firstname, lastname
-
-
-    //FORMULAIRE
-
-    //récup valeur du champ modifiable
+    // Mettre à jour l'username localement
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
-        //useEffect + 2eme state pour mise à jour?
     };
 
-    // vide formulaire + ferme
+    // Réinitialiser le formulaire et fermer l'édition
     const handleFormReset = () => {
-        // setUsername(newUsername);
-        console.log('canceled!')
-        openAndCloseEdit()
+        setUsername(currentUsername); // Rétablir la valeur actuelle
+        openAndCloseEdit();
     };
 
+    // Soumettre le formulaire
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        // ajouter requête envoi du form
-        console.log('submitted!')
-
-
-        // Réinitialiser le champ avec la nouvelle valeur
-        // setUsername(event.target.value);
-        openAndCloseEdit()
+        dispatch(modify({ username })).unwrap()
+            .then(() => {
+                console.log('Username updated successfully');
+                openAndCloseEdit();
+            })
+            .catch((error) => {
+                console.error('Error updating username:', error);
+            });
     };
 
     return (
         <>
-            {/* voir pour v userName={} */}
             {!toEdit ? (
-                <>
-                    {/* //faire en sorte que le nom soit mis à jour 
-                    apres soumission du form ~'onFrom' ou onChange ou function avec condition setUserName*/}
-                    <div className="header">
-                        {/* <h1>Welcome back<br />{name}!</h1> */}
-                        <h1 className="welcome">Welcome back<br /> {firstname} {lastname} !</h1>
-                        {/* au click "collapse"/cadre d'édition s'ouvre => useState */}
-                        <button className="edit-button" onClick={openAndCloseEdit}>Edit Name</button>
-                    </div>
-                </>
+                <div className="header">
+                    <h1 className="welcome">Welcome back<br />{firstname} {lastname}!</h1>
+                    <button className="edit-button" onClick={openAndCloseEdit}>Edit Name</button>
+                </div>
             ) : (
-                <>
-                    <div className="edit-username" >
-                        <h2>Edit user info</h2>
-                        <form className="edit-username-form">
-                            <fieldset className="form">
-                                <div>
-                                    <label htmlFor="username">User name</label>
-                                    {/* remettre value */}
-                                    <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} />
-                                </div>
-                                <div>
-                                    <label htmlFor="firstname">First name</label>
-                                    <input type="text" id="firstname" name="firstname" value={firstname} readOnly />
-                                </div>
-                                <div>
-                                    <label htmlFor="lastname">Last name</label>
-                                    <input type="text" id="lastname" name="lastname" value={lastname} readOnly />
-                                </div>
-
-                            </fieldset>
-                            <fieldset className="btns">
-                                <button type="submit" id="submit" onClick={handleFormSubmit}>Save</button>
-                                <button type="reset" id="reset" onClick={handleFormReset}>Cancel</button>
-                            </fieldset>
-                        </form>
-                    </div>
-                </>
+                <div className="edit-username">
+                    <h2>Edit user info</h2>
+                    <form className="edit-username-form" onSubmit={handleFormSubmit}>
+                        <fieldset className="form">
+                            <div>
+                                <label htmlFor="username">User name</label>
+                                <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} />
+                            </div>
+                            <div>
+                                <label htmlFor="firstname">First name</label>
+                                <input type="text" id="firstname" name="firstname" value={firstname} readOnly />
+                            </div>
+                            <div>
+                                <label htmlFor="lastname">Last name</label>
+                                <input type="text" id="lastname" name="lastname" value={lastname} readOnly />
+                            </div>
+                        </fieldset>
+                        <fieldset className="btns">
+                            <button type="submit" id="submit">Save</button>
+                            <button type="reset" id="reset" onClick={handleFormReset}>Cancel</button>
+                        </fieldset>
+                    </form>
+                </div>
             )}
         </>
-    )
+    );
 }
 
 export default UsernameEditForm;

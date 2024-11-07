@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux'
 import reportWebVitals from './reportWebVitals';
-import store from './reduxStore/store';
+import store from './app/store';
 import App from './app/App';
 import Navbar from './components/navbar/navbar';
 import User from './pages/user';

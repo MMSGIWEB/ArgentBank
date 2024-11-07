@@ -17,11 +17,12 @@ export const login = createAsyncThunk('user/login', async (credentials, thunkAPI
             body: JSON.stringify(credentials),
         });
         const data = await response.json();
+        console.log("API response:", data)
 
         if (!response.ok) throw new Error(data.message || 'Failed to login');
 
-        // Retourner les données utilisateur et token
-        return { user: data.user, token: data.token };
+        // Retourner l'objet `user` et `token` correctement extraits de `data.body`
+        return { user: data.body.user, token: data.body.token };
     } catch (error) {
         return thunkAPI.rejectWithValue({ message: error.message });
     }
@@ -69,6 +70,7 @@ const userSlice = createSlice({
                 state.error = null;
             })
             .addCase(login.fulfilled, (state, action) => {
+                console.log("Payload on fulfilled:", action.payload); // Vérifie le contenu du payload
                 state.isLoading = false;
                 state.data = action.payload.user;
                 state.token = action.payload.token;
