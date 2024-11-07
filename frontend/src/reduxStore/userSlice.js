@@ -1,9 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
+// Lit le token depuis localStorage si disponible
+const savedToken = localStorage.getItem('token');
+
 //INITIAL STATE
 const initialState = {
     data: {},
-    token: null,
+    token: savedToken || null, // Définit le jeton depuis localStorage
     isLoading: false,
     error: null,
 }
@@ -56,10 +59,12 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
+            console.log("Successfull logout!", state.token); // Vérifie le contenu du payload
             state.data = {};
             state.token = null;
             state.isLoading = false;
             state.error = null;
+            localStorage.removeItem('token'); // Efface le token à la déconnexion
         },
     },
     extraReducers: (builder) => {
@@ -74,6 +79,7 @@ const userSlice = createSlice({
                 state.isLoading = false;
                 state.data = action.payload.user;
                 state.token = action.payload.token;
+                localStorage.setItem('token', action.payload.token); // Enregistre le token dans localStorage
             })
             .addCase(login.rejected, (state, action) => {
                 state.isLoading = false;

@@ -1,11 +1,10 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import "./style.css";
 import logo from "../../assets/img/argentBankLogo.png";
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../reduxStore/userSlice';
 
 function Navbar() {
-    const store = useStore()
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { data, token } = useSelector((state) => state.user);
@@ -21,11 +20,13 @@ function Navbar() {
                 // Si l'utilisateur est connecté
                 <nav className="main-nav user-main-nav">
                     <div className="main-nav-logo user-logo">
-                        <img
-                            className="main-nav-logo-image"
-                            src={logo}
-                            alt="Argent Bank Logo"
-                        />
+                        <NavLink to="/">
+                            <img
+                                className="main-nav-logo-image"
+                                src={logo}
+                                alt="Argent Bank Logo"
+                            />
+                        </NavLink>
                         <h1 className="sr-only">Argent Bank</h1>
                     </div>
                     <div className="user-nav">
@@ -33,13 +34,13 @@ function Navbar() {
                             {/* Affichage du nom de l'utilisateur */}
                             {data?.username}
                         </div>
-                        <NavLink to="/user" className="main-nav-item">
+                        <NavLink to="/user" className="main-nav-item" aria-label="User Profile">
                             <i className="fa-regular fa-user"></i>
                         </NavLink>
-                        <button className="main-nav-item">
+                        <button className="main-nav-item" aria-label="Settings">
                             <i className="fa-solid fa-gear"></i>
                         </button>
-                        <button className="main-nav-item" onClick={handleLogout}>
+                        <button className="main-nav-item" onClick={handleLogout} aria-label="Logout">
                             <i className="fa-solid fa-power-off"></i>
                         </button>
                     </div>
@@ -56,11 +57,11 @@ function Navbar() {
                         <h1 className="sr-only">Argent Bank</h1>
                     </NavLink>
                     <div className="nav-right">
-                        <NavLink to="/signIn" className="main-nav-item">
+                        <NavLink to="/signIn" className="main-nav-item" aria-label="Sign In">
                             <i className="fa fa-user-circle"></i>
                             Sign In
                         </NavLink>
-                        <NavLink to="/signUp" className="main-nav-item">
+                        <NavLink to="/signUp" className="main-nav-item" aria-label="Sign Up">
                             <i className="fa fa-user-plus"></i>
                             Sign Up
                         </NavLink>
