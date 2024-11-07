@@ -7,9 +7,9 @@ function UsernameEditForm() {
     // Accéder aux données de l’utilisateur dans le state global
     const dispatch = useDispatch();
     const { data: user } = useSelector((state) => state.user);
-    const firstname = user?.firstname || '';
-    const lastname = user?.lastname || '';
-    const currentUsername = user?.username || '';
+    const firstname = user?.firstName || '';
+    const lastname = user?.lastName || '';
+    const currentUsername = user?.userName || '';
 
     // État local pour l'édition
     const [toEdit, setEdit] = useState(false);
@@ -34,7 +34,7 @@ function UsernameEditForm() {
     // Soumettre le formulaire
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        dispatch(modify({ username })).unwrap()
+        dispatch(modify({ username, firstName: firstname, lastName: lastname })).unwrap()
             .then(() => {
                 console.log('Username updated successfully');
                 openAndCloseEdit();

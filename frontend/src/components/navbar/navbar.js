@@ -61,10 +61,6 @@ function Navbar() {
                             <i className="fa fa-user-circle"></i>
                             Sign In
                         </NavLink>
-                        <NavLink to="/signUp" className="main-nav-item" aria-label="Sign Up">
-                            <i className="fa fa-user-plus"></i>
-                            Sign Up
-                        </NavLink>
                     </div>
                 </nav>
             )}
