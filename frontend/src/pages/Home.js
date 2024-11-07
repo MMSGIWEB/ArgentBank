@@ -7,7 +7,6 @@ import Navbar from '../components/navbar/navbar';
 function Home() {
     return (
         <>
-            <Navbar />
             <main>
                 <div className="hero">
                     <section className="hero-content">

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import Navbar from "../components/navbar/navbar";
+import Navbar from "../navbar/navbar";
 
 function SignUp() {
     return (

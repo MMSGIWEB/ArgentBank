@@ -19,7 +19,7 @@
   padding: 5px 20px;
 }
 
-.main-nav a {
+.main-nav a, .main-nav-item {
   font-weight: bold;
   color: #2c3e50;
 }
@@ -49,6 +49,10 @@
 .main-nav-logo-image {
   max-width: 100%;
   width: 200px;
+}
+
+.nav-right {
+  display: flex;
 }
 
 /*** USER ***/

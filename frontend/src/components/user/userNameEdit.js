@@ -48,7 +48,6 @@ function UsernameEditForm({ firstname, lastname }) {
         // setUsername(newUsername);
         console.log('canceled!')
         openAndCloseEdit()
-
     };
 
     const handleFormSubmit = (event) => {
@@ -64,7 +63,6 @@ function UsernameEditForm({ firstname, lastname }) {
 
     return (
         <>
-            <UserNav userName={"mettre la const/fonction du resultat du newUserName"} />
             {/* voir pour v userName={} */}
             {!toEdit ? (
                 <>
