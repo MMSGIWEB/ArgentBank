@@ -9,37 +9,45 @@ const initialState = {
 }
 
 //ASYNC THUNKS - LOGIN
-export const login = createAsyncThunk('login', async (credentials, thunkAPI) => {
-    try { //requête login
+export const login = createAsyncThunk('user/login', async (credentials, thunkAPI) => {
+    try {
         const response = await fetch('http://localhost:3001/api/v1/user/login', {
             method: 'POST',
-            headers: { 'Content-type': 'application/json' },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(credentials),
         });
         const data = await response.json();
-        if (!response.ok) throw new Error(data.message || 'Failed to login');
-    } catch (error) {
-        return thunkAPI.rejectWithValue(error.message);
-    }
-})
 
-export const modify = createAsyncThunk('userModify', async (userData, thunkAPI) => {
-    try { //requête modif username
+        if (!response.ok) throw new Error(data.message || 'Failed to login');
+
+        // Retourner les données utilisateur et token
+        return { user: data.user, token: data.token };
+    } catch (error) {
+        return thunkAPI.rejectWithValue({ message: error.message });
+    }
+});
+
+//ASYNC THUNKS - MODIFY USER PROFILE
+export const modify = createAsyncThunk('user/modify', async (userData, thunkAPI) => {
+    try {
         const response = await fetch('http://localhost:3001/api/v1/user/profile', {
             method: 'PUT',
             headers: {
-                'Content-type': 'application/json',
-                Authorization: `Bearer ${thunkAPI.getState().user.token}`
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${thunkAPI.getState().user.token}`,
             },
             body: JSON.stringify(userData),
-        })
-        const data = await response.json()
-        if (!response.ok) throw new Error(data.message || 'Failed to modify')
-        return data.user
+        });
+        const data = await response.json();
+
+        if (!response.ok) throw new Error(data.message || 'Failed to modify user profile');
+
+        // Retourner les nouvelles données utilisateur
+        return data.user;
     } catch (error) {
-        return thunkAPI.rejectWithValue(error.message)
+        return thunkAPI.rejectWithValue({ message: error.message });
     }
-})
+});
 
 //SLICE
 const userSlice = createSlice({
@@ -47,16 +55,15 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
-            state.data = null;
+            state.data = {};
             state.token = null;
             state.isLoading = false;
             state.error = null;
         },
     },
-    //mis à jour de l'état en réponse aux actions dispatchées
     extraReducers: (builder) => {
         builder
-            // Login
+            // LOGIN()
             .addCase(login.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
@@ -68,9 +75,9 @@ const userSlice = createSlice({
             })
             .addCase(login.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload;
+                state.error = action.payload.message;
             })
-            // Modify
+            // MODIFY()
             .addCase(modify.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
@@ -81,10 +88,11 @@ const userSlice = createSlice({
             })
             .addCase(modify.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload;
+                state.error = action.payload.message;
             });
     },
 });
-//importation de l'action entre {} + la rend utilisable + export le reducer userSlice
-export const { logout } = userSlice.actions
-export default userSlice.reducer
+
+//export des actions
+export const { logout } = userSlice.actions;
+export default userSlice.reducer;

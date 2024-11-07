@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import './style.css';
-import UserNav from "../navbar/userNav";
 
 function UsernameEditForm({ firstname, lastname }) {
     //EDITION DU NOM D'UTILISATEUR
