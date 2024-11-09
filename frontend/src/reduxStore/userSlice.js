@@ -77,7 +77,7 @@ export const fetchUserInfo = createAsyncThunk('user/fetchUserInfo', async (_, th
 });
 
 // MODIFY USERNAME (Pour modifier uniquement le username ici)
-export const modify = createAsyncThunk('user/modify', async (username, thunkAPI, token) => {
+export const modify = createAsyncThunk('user/modify', async (username, thunkAPI) => {
     try {
         const token = thunkAPI.getState().user.token || localStorage.getItem('token');
 
