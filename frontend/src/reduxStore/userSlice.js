@@ -1,145 +1,154 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 // Lit le token depuis localStorage si disponible
 const savedToken = localStorage.getItem('token');
 
-//INITIAL STATE
+// INITIAL STATE
 const initialState = {
     data: {
         firstName: '',
         lastName: '',
-        username: '',
+        userName: '',
     },
-    token: savedToken || null, // Définit le jeton depuis localStorage
+    token: savedToken || null,
     isLoading: false,
     error: null,
-}
+};
 
-//ASYNC THUNKS - LOGIN
+// ASYNC THUNKS - LOGIN
 export const login = createAsyncThunk('user/login', async (credentials, thunkAPI) => {
     try {
         const response = await fetch('http://localhost:3001/api/v1/user/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(credentials),
         });
         const data = await response.json();
-        console.log("API login response:", data)
 
         if (!response.ok) throw new Error(data.message || 'Failed to login');
 
-        // Vérifie si les propriétés existent dans `data.body.user`
-        // const user = data.body.user || {};
-        // const firstName = user.firstName || 'Unknown';  // Valeur par défaut si non défini
-        // const lastName = user.lastName || 'Unknown';
-        // const username = user.username || 'Unknown';
-
-        // return { user: data.body.user, token: data.body.token }; // Assurez-vous que la structure des données est correcte
-
-        // Retourner les informations de l'utilisateur extraites de `data.body`
-        // return { user: { firstName, lastName, username }, token: data.body.token };
-
-        // Retourner les informations de l'utilisateur extraites de `data.body`
         return {
             user: {
-                firstName: data.body.firstName,
-                lastName: data.body.lastName,
-                username: data.body.username,
+                firstName: data.body.firstName || 'Unknown',
+                lastName: data.body.lastName || 'Unknown',
+                userName: data.body.userName || 'Unknown',
             },
             token: data.body.token,
-        }
+        };
     } catch (error) {
         return thunkAPI.rejectWithValue({ message: error.message });
     }
 });
 
-//RECUP DONNEES DE L'UTILISATEUR
-export const fetchUserInfo = createAsyncThunk('userInfo', async (token) => {
+// FETCH USER INFO
+export const fetchUserInfo = createAsyncThunk('user/fetchUserInfo', async (_, thunkAPI) => {
     try {
+        const token = thunkAPI.getState().user.token;
+
         const response = await fetch('http://localhost:3001/api/v1/user/profile', {
-            method: 'POST',
+            method: 'GET',
             headers: {
+                accept: 'application/json',
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(userData),
         });
+
         const data = await response.json();
-        console.log("API fetchInfo response:", data) // Vérifie la réponse complète
+        console.log("fetchUserInfo - Data utilisateur :", data.body);  // Log de la donnée utilisateur complète
 
-        if (!response.ok) throw new Error(data.message || 'Failed to modify user profile');
+        if (!response.ok) throw new Error(data.message || 'Failed to fetch user info');
 
-        // Retourner les nouvelles données utilisateur
-        return data.body; // Supposons que la réponse contienne les informations mises à jour
+        return data.body;
     } catch (error) {
         return thunkAPI.rejectWithValue({ message: error.message });
     }
 });
 
-
-//ASYNC THUNKS - MODIFY USER PROFILE (Pour modifier uniquement le username ici)
-export const modify = createAsyncThunk('user/modify', async (userData, thunkAPI) => {
+// MODIFY USERNAME (Pour modifier uniquement le username ici)
+export const modify = createAsyncThunk('user/modify', async (newUserName, thunkAPI) => {
     try {
+        const token = thunkAPI.getState().user.token;
+
         const response = await fetch('http://localhost:3001/api/v1/user/profile', {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
+                accept: 'application/json',
                 Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(userData),
+            // Envoie le `username` comme un objet JSON
+            body: JSON.stringify({ newUserName }),  // Envoie l'objet JSON avec newUserName
         });
+
         const data = await response.json();
-        console.log("API modify response:", data) // Vérifie la réponse complète
+        console.log('modify return:', data);
 
         if (!response.ok) throw new Error(data.message || 'Failed to modify user profile');
 
-        // Retourner les nouvelles données utilisateur
-        return response.data.body; // Supposons que la réponse contienne les informations mises à jour
+        return data.body; // Les données renvoyées par l'API doivent contenir les informations mises à jour
     } catch (error) {
         return thunkAPI.rejectWithValue({ message: error.message });
     }
 });
 
-//SLICE
+
+
+// SLICE
 const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
         logout: (state) => {
-            console.log("Successfull logout!", state.token); // Vérifie le contenu du payload
-            state.data = {};
-            state.token = null;
-            state.isLoading = false;
-            state.error = null;
-            localStorage.removeItem('token'); // Efface le token à la déconnexion
+            state.data = {}; // Effacer les données utilisateur
+            state.token = null; // Effacer le token
+            state.isLoading = false; // Réinitialiser le chargement
+            state.error = null; // Réinitialiser l'erreur
+            localStorage.removeItem('token'); // Retirer le token du localStorage
         },
     },
     extraReducers: (builder) => {
         builder
-            // LOGIN()
+            // LOGIN
             .addCase(login.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
             .addCase(login.fulfilled, (state, action) => {
-                console.log("Payload on fulfilled:", action.payload); // Vérifie le contenu du payload
                 state.isLoading = false;
                 state.data = action.payload.user;
                 state.token = action.payload.token;
-                localStorage.setItem('token', action.payload.token); // Enregistre le token dans localStorage
+                localStorage.setItem('token', action.payload.token);
             })
             .addCase(login.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload.message;
             })
-            // MODIFY()
+            // FETCH USER INFO
+            .addCase(fetchUserInfo.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(fetchUserInfo.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.data = action.payload;
+            })
+            .addCase(fetchUserInfo.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload.message;
+                console.error('Failed to update username:', action.error);
+            })
+            // MODIFY USERNAME
             .addCase(modify.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
             .addCase(modify.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.data.username = action.payload.username; // Mettre à jour seulement le `username`
+                state.data.userName = action.payload.userName; // Met à jour le nom d'utilisateur
             })
             .addCase(modify.rejected, (state, action) => {
                 state.isLoading = false;
@@ -148,6 +157,8 @@ const userSlice = createSlice({
     },
 });
 
-//export des actions
+// Export des actions
 export const { logout } = userSlice.actions;
+
+// Export du reducer
 export default userSlice.reducer;

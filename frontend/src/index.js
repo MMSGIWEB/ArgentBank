@@ -33,7 +33,7 @@ const router = createBrowserRouter([
     path: "/user",
     element:
       <>
-        <Navbar />
+        {/* <Navbar /> */}
         <User />
       </>
   }
