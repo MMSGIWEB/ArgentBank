@@ -12,12 +12,13 @@ function SignIn() {
         password: ''
     });
 
-    const { isLoading, error, token } = useSelector((state) => state.user);
+    const { isLoading, error, token, data: user } = useSelector((state) => state.user);
 
     // Effect qui surveille le changement du token pour rediriger l'utilisateur après la connexion
     useEffect(() => {
         if (token) {
-            navigate('/user');  // Redirection après la connexion réussie
+            console.log("User Info:", user); // Affiche les données utilisateur récupérées (firstName, lastName, username)
+            navigate("/user");  // Redirection après la connexion réussie
         }
     }, [token, navigate]);  // Dépend de 'token' pour se déclencher après qu'il soit mis à jour
 
