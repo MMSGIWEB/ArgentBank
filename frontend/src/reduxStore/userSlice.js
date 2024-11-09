@@ -32,11 +32,12 @@ export const login = createAsyncThunk('user/login', async (credentials, thunkAPI
         if (!response.ok) throw new Error(data.message || 'Failed to login');
 
         return {
-            user: {
-                firstName: data.body.firstName || 'Unknown',
-                lastName: data.body.lastName || 'Unknown',
-                userName: data.body.userName || 'Unknown',
-            },
+            // user:
+            // {
+            //     firstName: data.body.firstName || 'Unknown',
+            //     lastName: data.body.lastName || 'Unknown',
+            //     userName: data.body.userName || 'Unknown',
+            // },
             token: data.body.token,
         };
     } catch (error) {
@@ -47,32 +48,38 @@ export const login = createAsyncThunk('user/login', async (credentials, thunkAPI
 // FETCH USER INFO
 export const fetchUserInfo = createAsyncThunk('user/fetchUserInfo', async (_, thunkAPI) => {
     try {
-        const token = thunkAPI.getState().user.token;
+        const token = thunkAPI.getState().user.token || localStorage.getItem('token');
 
-        const response = await fetch('http://localhost:3001/api/v1/user/profile', {
-            method: 'GET',
-            headers: {
-                accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        if (token) {
+            const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
-        const data = await response.json();
-        console.log("fetchUserInfo - Data utilisateur :", data.body);  // Log de la donnée utilisateur complète
+            const data = await response.json();
+            console.log("fetchUserInfo - Data utilisateur :", data.body);  // Log de la donnée utilisateur complète
 
-        if (!response.ok) throw new Error(data.message || 'Failed to fetch user info');
+            if (!response.ok) throw new Error(data.message || 'Failed to fetch user info');
 
-        return data.body;
+            return {
+                firstName: data.body.firstName || 'Unknown',
+                lastName: data.body.lastName || 'Unknown',
+                userName: data.body.userName || 'Unknown',
+            };
+        }
     } catch (error) {
         return thunkAPI.rejectWithValue({ message: error.message });
     }
 });
 
 // MODIFY USERNAME (Pour modifier uniquement le username ici)
-export const modify = createAsyncThunk('user/modify', async (newUserName, thunkAPI) => {
+export const modify = createAsyncThunk('user/modify', async (username, thunkAPI, token) => {
     try {
-        const token = thunkAPI.getState().user.token;
+        const token = thunkAPI.getState().user.token || localStorage.getItem('token');
 
         const response = await fetch('http://localhost:3001/api/v1/user/profile', {
             method: 'PUT',
@@ -82,7 +89,7 @@ export const modify = createAsyncThunk('user/modify', async (newUserName, thunkA
                 'Content-Type': 'application/json',
             },
             // Envoie le `username` comme un objet JSON
-            body: JSON.stringify({ newUserName }),  // Envoie l'objet JSON avec newUserName
+            body: JSON.stringify(username),  // Envoie l'objet JSON avec newUserName
         });
 
         const data = await response.json();

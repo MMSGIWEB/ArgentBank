@@ -8,9 +8,11 @@ import { useNavigate, NavLink } from "react-router-dom";
 function UsernameEditForm() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const token = localStorage.getItem('token');
+
 
     // Accéder aux données de l’utilisateur dans le state global
-    const { data: user, token, isLoading } = useSelector((state) => state.user);
+    const { data: user, isLoading } = useSelector((state) => state.user);
 
     // Créer un état local pour le nom affiché dans la nav
     const currentUsername = user?.userName || ''; // Par défaut, chaîne vide si userName est undefined
@@ -31,7 +33,6 @@ function UsernameEditForm() {
     // État local pour l'édition
     const [toEdit, setEdit] = useState(false);
     const [username, setUsername] = useState(currentUsername); // Init avec `currentUsername`
-    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         // Mettre à jour le champ d’édition si `currentUsername` change
@@ -54,13 +55,10 @@ function UsernameEditForm() {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        console.log("Username avant modification :", username);  // Log avant envoi
-        dispatch(modify({ userName: username }))
+        dispatch(modify({ "userName": username }))
             .unwrap()
             .then(() => {
                 console.log('Username updated successfully');
-                console.log('New username:', username);
-                console.log('v currentUserName:', currentUsername)
                 dispatch(fetchUserInfo()); // Rafraîchir les informations après modification
                 openAndCloseEdit();
             })
