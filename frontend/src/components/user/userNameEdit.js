@@ -11,9 +11,11 @@ function UsernameEditForm() {
 
     // Accéder aux données de l’utilisateur dans le state global
     const { data: user, token, isLoading } = useSelector((state) => state.user);
-    const firstname = user?.firstName || '';
-    const lastname = user?.lastName || '';
+
+    // Créer un état local pour le nom affiché dans la nav
     const currentUsername = user?.userName || ''; // Par défaut, chaîne vide si userName est undefined
+    const [displayedUsername, setDisplayedUsername] = useState(user?.userName || '');
+
 
     useEffect(() => {
         if (token) {
@@ -29,10 +31,12 @@ function UsernameEditForm() {
     // État local pour l'édition
     const [toEdit, setEdit] = useState(false);
     const [username, setUsername] = useState(currentUsername); // Init avec `currentUsername`
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         // Mettre à jour le champ d’édition si `currentUsername` change
         setUsername(currentUsername);
+        setDisplayedUsername(currentUsername);  // Mettre à jour `displayedUsername` lorsque `currentUsername` change
     }, [currentUsername]);
 
     const openAndCloseEdit = () => {
@@ -56,6 +60,7 @@ function UsernameEditForm() {
             .then(() => {
                 console.log('Username updated successfully');
                 console.log('New username:', username);
+                console.log('v currentUserName:', currentUsername)
                 dispatch(fetchUserInfo()); // Rafraîchir les informations après modification
                 openAndCloseEdit();
             })
@@ -69,17 +74,13 @@ function UsernameEditForm() {
             <nav className="main-nav user-main-nav">
                 <div className="main-nav-logo user-logo">
                     <NavLink to="/">
-                        <img
-                            className="main-nav-logo-image"
-                            src={logo}
-                            alt="Argent Bank Logo"
-                        />
+                        <img className="main-nav-logo-image" src={logo} alt="Argent Bank Logo" />
                     </NavLink>
                     <h1 className="sr-only">Argent Bank</h1>
                 </div>
                 <div className="user-nav">
                     <div className="user-name">
-                        {isLoading ? 'Loading...' : user.userName} {/* Affiche user.userName */}
+                        {isLoading ? 'Loading...' : displayedUsername || user?.firstName}
                     </div>
                     <NavLink to="/user" className="main-nav-item" aria-label="User Profile">
                         <i className="fa-regular fa-user"></i>
@@ -94,7 +95,7 @@ function UsernameEditForm() {
             </nav>
             {!toEdit ? (
                 <div className="header">
-                    <h1 className="welcome">Welcome back<br />{firstname} {lastname}!</h1>
+                    <h1 className="welcome">Welcome back<br />{user?.firstName} {user?.lastName}!</h1>
                     <button className="edit-button" onClick={openAndCloseEdit}>Edit Name</button>
                 </div>
             ) : (
@@ -108,11 +109,11 @@ function UsernameEditForm() {
                             </div>
                             <div>
                                 <label htmlFor="firstname">First name</label>
-                                <input type="text" id="firstname" name="firstname" value={firstname} readOnly />
+                                <input type="text" id="firstname" name="firstname" value={user?.firstName} readOnly />
                             </div>
                             <div>
                                 <label htmlFor="lastname">Last name</label>
-                                <input type="text" id="lastname" name="lastname" value={lastname} readOnly />
+                                <input type="text" id="lastname" name="lastname" value={user?.lastName} readOnly />
                             </div>
                         </fieldset>
                         <fieldset className="btns">

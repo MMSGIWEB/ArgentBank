@@ -1,19 +1,15 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./style.css";
 import logo from "../../assets/img/argentBankLogo.png";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserInfo, logout } from '../../reduxStore/userSlice';
+import { fetchUserInfo } from '../../reduxStore/userSlice';
 import { useEffect } from "react";
 
 function Navbar() {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     // Récupérer le token et les données utilisateur dans le state global
-    const { data: user, token, isLoading } = useSelector((state) => state.user);
-
-    // Récupérer le username à partir de l'état global
-    const currentUsername = user?.username || 'No new username';
+    const { data: token } = useSelector((state) => state.user);
 
     useEffect(() => {
         // Récupérer les informations utilisateur après la connexion
@@ -21,11 +17,6 @@ function Navbar() {
             dispatch(fetchUserInfo());
         }
     }, [dispatch, token]); // Dépendance sur le token pour s'assurer qu'on fetch après connexion
-
-    const handleLogout = () => {
-        dispatch(logout());  // Déconnexion via Redux
-        navigate("/");       // Redirection vers la page d'accueil
-    };
 
     return (
         // Si l'utilisateur n'est pas connecté

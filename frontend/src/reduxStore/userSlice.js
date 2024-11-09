@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { act } from 'react';
 
 // Lit le token depuis localStorage si disponible
 const savedToken = localStorage.getItem('token');
@@ -131,6 +132,7 @@ const userSlice = createSlice({
             .addCase(fetchUserInfo.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
+
             })
             .addCase(fetchUserInfo.fulfilled, (state, action) => {
                 state.isLoading = false;
@@ -139,20 +141,23 @@ const userSlice = createSlice({
             .addCase(fetchUserInfo.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload.message;
-                console.error('Failed to update username:', action.error);
+                console.error('Failed to fetch username:', action.error);
             })
             // MODIFY USERNAME
             .addCase(modify.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
+                console.log('Loading...')
             })
             .addCase(modify.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.data.userName = action.payload.userName; // Met à jour le nom d'utilisateur
+                console.log('userName update Succed !', action.payload.userName)
             })
             .addCase(modify.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload.message;
+                console.log('Failed to update userName', action.payload.message)
             });
     },
 });
