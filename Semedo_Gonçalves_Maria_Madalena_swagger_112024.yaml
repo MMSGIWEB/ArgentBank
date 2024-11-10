@@ -1,0 +1,375 @@
+swagger: '2.0'
+info:
+  title: Bank Argent API documentation
+  description: Contains all available API endpoints in this codebase
+  version: '1.0.0'
+  termsOfService: 'http://swagger.io/terms/'
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+paths:
+  /user/login:
+    post:
+      tags:
+        - User Module
+      summary: Login
+      description: API for Login
+      parameters:
+        - in: body
+          name: body
+          description: Login Payload
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Login Successfully
+          schema:
+            $ref: '#/definitions/LoginResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/signup:
+    post:
+      tags:
+        - User Module
+      summary: Signup
+      description: API for Signup
+      parameters:
+        - in: body
+          name: body
+          description: Signup Payload
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Signup Successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/profile:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for fetching a user profile
+      produces:
+       - application/json
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for updating a user profile
+      parameters:
+        - in: body
+          name: body
+          description: Update user profile attributes
+          required: true
+          schema:
+            $ref: '#/definitions/UserProfile'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /users/{id}/accounts:
+    get:
+      tags:
+        - Transaction Module
+      summary: Get User's Accounts on his profile
+      description: API to retrieve a user's accounts of his profile
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: User ID
+        - in: header
+          name: authorization
+          type: string
+          required: true
+          description: Authorization Token
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User's accounts retrieved successfully
+          schema:
+            $ref: '#/definitions/AccountList'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: User Not Found
+        '500':
+          description: Internal Server Error
+  /accounts/{id}/transactions:
+    get:
+      tags:
+        - Transaction Module
+      summary: Get Account Transactions
+      description: API to retrieve transactions for a specific account
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Account ID
+        - in: header
+          name: authorization
+          type: string
+          required: true
+          description: Authorization Token
+        - in: query
+          name: month
+          type: integer
+          required: true
+          format: date
+          description: Transactions of the current month (YYYYMM)
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transactions retrieved successfully
+          schema:
+            $ref: '#/definitions/TransactionList'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Account Not Found
+        '500':
+          description: Internal Server Error
+  /transactions/{id}:
+    put:
+      tags:
+        - Transaction Module
+      summary: Update Transaction by ID
+      description: API to update a transaction from an account by ID
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Transaction ID
+        - in: body
+          name: body
+          description: Update transaction attributes
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateTransaction'
+        - in: header
+          name: authorization
+          type: string
+          required: true
+          description: Authorization Token
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction updated successfully
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Fields
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Transaction Not Found
+        '500':
+          description: Internal Server Error
+  /transaction/Categories:
+    get:
+      tags:
+        - Transaction Module
+      summary: Get Type categories by ID
+      description: API to fetch all the type categories of the category section from the transaction
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Categories retrieved successfully
+          schema:
+            $ref: '#/definitions/Categories'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Account Not Found
+        '500':
+          description: Internal Server Error
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  User:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+      firstName:
+        type: string
+        description: user first name
+      lastName:
+        type: string
+        description: user last name
+      userName:
+        type: string
+        description: user public name
+  Login:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+  ApiResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          id:
+            type: string
+          email:
+            type: string
+  LoginResponse:
+    type: object
+    properties:
+      token:
+        type: string
+  UserProfile:
+    type: object
+    properties:
+      userName:
+        type: string
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: integer
+      date:
+        type: integer
+      description:
+        type: string
+      amount:
+        type: integer
+      currency:
+        type: string
+      type:
+        type: string
+      category:
+        type: string
+      notes:
+        type: string
+  TransactionList:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+        date:
+          type: integer
+        description:
+          type: string
+        amount:
+          type: integer
+        currency:
+          type: string
+        type:
+          type: string
+        category:
+          type: string
+        notes:
+          type: string
+  UpdateTransaction:
+    type: object
+    properties:
+      category:
+        type: string
+      notes:
+        type: string
+  Account:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Account ID
+      name:
+        type: string
+        description: Account name
+      balance:
+        type: integer
+        description: Account balance
+      currency:
+        type: string
+  AccountList:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Account ID
+        name:
+          type: string
+          description: Account name
+        balance:
+          type: integer
+          description: Account balance
+        currency:
+          type: string
+  Categories:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Category name
+      id:
+        type: integer
+        description: Category id
