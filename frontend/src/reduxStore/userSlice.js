@@ -60,7 +60,7 @@ export const fetchUserInfo = createAsyncThunk('user/fetchUserInfo', async (_, th
             if (!response.ok) throw new Error(data.message || 'Failed to fetch user info');
 
             return {
-                // retourne objet avec infos xsuivantes
+                // retourne objet avec infos suivantes
                 firstName: data.body.firstName || 'Unknown',
                 lastName: data.body.lastName || 'Unknown',
                 userName: data.body.userName || 'Unknown',
