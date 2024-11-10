@@ -32,12 +32,6 @@ export const login = createAsyncThunk('user/login', async (credentials, thunkAPI
         if (!response.ok) throw new Error(data.message || 'Failed to login');
 
         return {
-            // user:
-            // {
-            //     firstName: data.body.firstName || 'Unknown',
-            //     lastName: data.body.lastName || 'Unknown',
-            //     userName: data.body.userName || 'Unknown',
-            // },
             token: data.body.token,
         };
     } catch (error) {
