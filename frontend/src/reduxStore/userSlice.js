@@ -27,13 +27,14 @@ export const login = createAsyncThunk('user/login', async (credentials, thunkAPI
             body: JSON.stringify(credentials),
         });
         const data = await response.json();
-
+        //si requête n'aboutit pas
         if (!response.ok) throw new Error(data.message || 'Failed to login');
 
         return {
             token: data.body.token,
         };
     } catch (error) {
+        // pour gérer les erreurs
         return thunkAPI.rejectWithValue({ message: error.message });
     }
 });
@@ -59,6 +60,7 @@ export const fetchUserInfo = createAsyncThunk('user/fetchUserInfo', async (_, th
             if (!response.ok) throw new Error(data.message || 'Failed to fetch user info');
 
             return {
+                // retourne objet avec infos xsuivantes
                 firstName: data.body.firstName || 'Unknown',
                 lastName: data.body.lastName || 'Unknown',
                 userName: data.body.userName || 'Unknown',
@@ -81,8 +83,8 @@ export const modify = createAsyncThunk('user/modify', async (username, thunkAPI)
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            // Envoie le `username` comme un objet JSON
-            body: JSON.stringify(username),  // Envoie l'objet JSON avec newUserName
+            // Envoie le `username` comme une chaîne de caractères JSON
+            body: JSON.stringify(username),
         });
 
         const data = await response.json();
@@ -111,6 +113,7 @@ const userSlice = createSlice({
             localStorage.removeItem('token'); // Retirer le token du localStorage
         },
     },
+    // gestion des actions asynchrones
     extraReducers: (builder) => {
         builder
             // LOGIN
@@ -162,7 +165,7 @@ const userSlice = createSlice({
     },
 });
 
-// Export des actions
+// Export des actions du logout
 export const { logout } = userSlice.actions;
 
 // Export du reducer

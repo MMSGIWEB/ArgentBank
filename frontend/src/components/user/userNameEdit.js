@@ -10,14 +10,13 @@ function UsernameEditForm() {
     const dispatch = useDispatch();
     const token = localStorage.getItem('token');
 
-
-    // Accéder aux données de l’utilisateur dans le state global
+    // Accéder aux données de user dans le state global
     const { data: user, isLoading } = useSelector((state) => state.user);
 
-    // Créer un état local pour le nom affiché dans la nav
+    // état local pour le nom affiché dans la nav
     const currentUsername = user?.userName || ''; // Par défaut, chaîne vide si userName est undefined
     const [displayedUsername, setDisplayedUsername] = useState(user?.userName || '');
-
+    const [username, setUsername] = useState(currentUsername); // Init avec `currentUsername`
 
     useEffect(() => {
         if (token) {
@@ -32,11 +31,10 @@ function UsernameEditForm() {
 
     // État local pour l'édition
     const [toEdit, setEdit] = useState(false);
-    const [username, setUsername] = useState(currentUsername); // Init avec `currentUsername`
 
     useEffect(() => {
         // Mettre à jour le champ d’édition si `currentUsername` change
-        setUsername(currentUsername);
+        // setUsername(currentUsername);
         setDisplayedUsername(currentUsername);  // Mettre à jour `displayedUsername` lorsque `currentUsername` change
     }, [currentUsername]);
 
@@ -49,17 +47,18 @@ function UsernameEditForm() {
     };
 
     const handleFormReset = () => {
-        setUsername(currentUsername); // Restaurer la valeur actuelle
+        setUsername(currentUsername); // Restaure la valeur actuelle
         openAndCloseEdit();
     };
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
         dispatch(modify({ 'userName': username }))
+            //  extrait la v résolue de la promesse retournée par 'modify()'
             .unwrap()
             .then(() => {
                 console.log('Username updated successfully');
-                dispatch(fetchUserInfo()); // Rafraîchir les informations après modification
+                dispatch(fetchUserInfo()); // Rafraîchir les infos après modifications
                 openAndCloseEdit();
             })
             .catch((error) => {
