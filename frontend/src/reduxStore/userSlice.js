@@ -61,7 +61,7 @@ export const fetchUserInfo = createAsyncThunk('user/fetchUserInfo', async (_, th
             });
 
             const data = await response.json();
-            console.log("fetchUserInfo - Data utilisateur :", data.body);  // Log de la donnée utilisateur complète
+            console.log('fetchUserInfo - Data utilisateur :', data.body);  // Log de la donnée utilisateur complète
 
             if (!response.ok) throw new Error(data.message || 'Failed to fetch user info');
 

@@ -12,7 +12,7 @@ import SignIn from './pages/signIn';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element:
       <>
         <Navbar />
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
 
   },
   {
-    path: "/signIn",
+    path: '/signIn',
     element:
       <>
         <Navbar />
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/user",
+    path: '/user',
     element:
       <>
         {/* <Navbar /> */}
@@ -38,7 +38,7 @@ const router = createBrowserRouter([
       </>
   }
   // {
-  //   path: "/signUp",
+  //   path: '/signUp',
   //   element:
   //     <>
   //       <SignUp />
@@ -52,7 +52,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* store={store} -- store fait réf à la rootStore que l'on crée pour stocker les "actions/fonctions" via redux + on l'importe plus haut*/}
+      {/* store={store} -- store fait réf à la rootStore que l'on crée pour stocker les 'actions/fonctions' via redux + on l'importe plus haut*/}
       <RouterProvider router={router} />
       /</Provider>
   </React.StrictMode >

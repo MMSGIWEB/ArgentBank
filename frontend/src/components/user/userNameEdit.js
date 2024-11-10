@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './style-min.css';
-import logo from "../../assets/img/argentBankLogo.png";
-import { fetchUserInfo, logout, modify } from "../../reduxStore/userSlice";
-import { useNavigate, NavLink } from "react-router-dom";
+import logo from '../../assets/img/argentBankLogo.png';
+import { fetchUserInfo, logout, modify } from '../../reduxStore/userSlice';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 function UsernameEditForm() {
     const navigate = useNavigate();
@@ -27,7 +27,7 @@ function UsernameEditForm() {
 
     const handleLogout = () => {
         dispatch(logout());
-        navigate("/");
+        navigate('/');
     };
 
     // État local pour l'édition
@@ -55,7 +55,7 @@ function UsernameEditForm() {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        dispatch(modify({ "userName": username }))
+        dispatch(modify({ 'userName': username }))
             .unwrap()
             .then(() => {
                 console.log('Username updated successfully');
@@ -69,54 +69,54 @@ function UsernameEditForm() {
 
     return (
         <>
-            <nav className="main-nav user-main-nav">
-                <div className="main-nav-logo user-logo">
-                    <NavLink to="/">
-                        <img className="main-nav-logo-image" src={logo} alt="Argent Bank Logo" />
+            <nav className='main-nav user-main-nav'>
+                <div className='main-nav-logo user-logo'>
+                    <NavLink to='/'>
+                        <img className='main-nav-logo-image' src={logo} alt='Argent Bank Logo' />
                     </NavLink>
-                    <h1 className="sr-only">Argent Bank</h1>
+                    <h1 className='sr-only'>Argent Bank</h1>
                 </div>
-                <div className="user-nav">
-                    <div className="user-name">
+                <div className='user-nav'>
+                    <div className='user-name'>
                         {isLoading ? 'Loading...' : displayedUsername || user?.firstName}
                     </div>
-                    <NavLink to="/user" className="main-nav-item" aria-label="User Profile">
-                        <i className="fa-regular fa-user"></i>
+                    <NavLink to='/user' className='main-nav-item' aria-label='User Profile'>
+                        <i className='fa-regular fa-user'></i>
                     </NavLink>
-                    <button className="main-nav-item" aria-label="Settings">
-                        <i className="fa-solid fa-gear"></i>
+                    <button className='main-nav-item' aria-label='Settings'>
+                        <i className='fa-solid fa-gear'></i>
                     </button>
-                    <button className="main-nav-item" onClick={handleLogout} aria-label="Logout">
-                        <i className="fa-solid fa-power-off"></i>
+                    <button className='main-nav-item' onClick={handleLogout} aria-label='Logout'>
+                        <i className='fa-solid fa-power-off'></i>
                     </button>
                 </div>
             </nav>
             {!toEdit ? (
-                <div className="header">
-                    <h1 className="welcome">Welcome back<br />{user?.firstName} {user?.lastName}!</h1>
-                    <button className="edit-button" onClick={openAndCloseEdit}>Edit Name</button>
+                <div className='header'>
+                    <h1 className='welcome'>Welcome back<br />{user?.firstName} {user?.lastName}!</h1>
+                    <button className='edit-button' onClick={openAndCloseEdit}>Edit Name</button>
                 </div>
             ) : (
-                <div className="edit-username">
+                <div className='edit-username'>
                     <h2>Edit user info</h2>
-                    <form className="edit-username-form" onSubmit={handleFormSubmit}>
-                        <fieldset className="form">
+                    <form className='edit-username-form' onSubmit={handleFormSubmit}>
+                        <fieldset className='form'>
                             <div>
-                                <label htmlFor="username">User name</label>
-                                <input type="text" id="username" name="username" value={username} onChange={handleUsernameChange} />
+                                <label htmlFor='username'>User name</label>
+                                <input type='text' id='username' name='username' value={username} onChange={handleUsernameChange} />
                             </div>
                             <div>
-                                <label htmlFor="firstname">First name</label>
-                                <input type="text" id="firstname" name="firstname" value={user?.firstName} readOnly />
+                                <label htmlFor='firstname'>First name</label>
+                                <input type='text' id='firstname' name='firstname' value={user?.firstName} readOnly />
                             </div>
                             <div>
-                                <label htmlFor="lastname">Last name</label>
-                                <input type="text" id="lastname" name="lastname" value={user?.lastName} readOnly />
+                                <label htmlFor='lastname'>Last name</label>
+                                <input type='text' id='lastname' name='lastname' value={user?.lastName} readOnly />
                             </div>
                         </fieldset>
-                        <fieldset className="btns">
-                            <button type="submit" id="submit">Save</button>
-                            <button type="reset" id="reset" onClick={handleFormReset}>Cancel</button>
+                        <fieldset className='btns'>
+                            <button type='submit' id='submit'>Save</button>
+                            <button type='reset' id='reset' onClick={handleFormReset}>Cancel</button>
                         </fieldset>
                     </form>
                 </div>
