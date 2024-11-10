@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import './style.css';
+import './style-min.css';
 import logo from "../../assets/img/argentBankLogo.png";
 import { fetchUserInfo, logout, modify } from "../../reduxStore/userSlice";
 import { useNavigate, NavLink } from "react-router-dom";

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import "./style.css";
+import "./style-min.css";
 import logo from "../../assets/img/argentBankLogo.png";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserInfo } from '../../reduxStore/userSlice';
