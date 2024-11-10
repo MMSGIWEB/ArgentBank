@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { act } from 'react';
 
 // Lit le token depuis localStorage si disponible
 const savedToken = localStorage.getItem('token');
