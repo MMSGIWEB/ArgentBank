@@ -33,17 +33,9 @@ const router = createBrowserRouter([
     path: '/user',
     element:
       <>
-        {/* <Navbar /> */}
         <User />
       </>
   }
-  // {
-  //   path: '/signUp',
-  //   element:
-  //     <>
-  //       <SignUp />
-  //     </>
-  // }
 ])
 
 
