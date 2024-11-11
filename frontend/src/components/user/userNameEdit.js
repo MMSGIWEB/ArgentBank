@@ -34,7 +34,7 @@ function UsernameEditForm() {
 
     useEffect(() => {
         // Mettre à jour le champ d’édition si `currentUsername` change
-        // setUsername(currentUsername);
+        setUsername(currentUsername);
         setDisplayedUsername(currentUsername);  // Mettre à jour `displayedUsername` lorsque `currentUsername` change
     }, [currentUsername]);
 
