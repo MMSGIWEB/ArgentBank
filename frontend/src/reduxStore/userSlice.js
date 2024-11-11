@@ -135,7 +135,6 @@ const userSlice = createSlice({
             .addCase(fetchUserInfo.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
-
             })
             .addCase(fetchUserInfo.fulfilled, (state, action) => {
                 state.isLoading = false;
