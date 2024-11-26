@@ -7,12 +7,11 @@ import store from './app/store';
 import App from './app/App';
 import Navbar from './components/navbar/navbar';
 import User from './pages/user';
-import SignIn from './pages/signIn';
-
+import SignIn from './pages/signIn'
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/ArgentBank',
     element:
       <>
         <Navbar />
