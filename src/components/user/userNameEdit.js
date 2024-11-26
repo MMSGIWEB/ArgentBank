@@ -26,7 +26,7 @@ function UsernameEditForm() {
 
     const handleLogout = () => {
         dispatch(logout());
-        navigate('/');
+        navigate('/ArgentBank');
     };
 
     // État local pour l'édition
@@ -70,7 +70,7 @@ function UsernameEditForm() {
         <>
             <nav className='main-nav user-main-nav'>
                 <div className='main-nav-logo user-logo'>
-                    <NavLink to='/'>
+                    <NavLink to='/ArgentBank'>
                         <img className='main-nav-logo-image' src={logo} alt='Argent Bank Logo' />
                     </NavLink>
                     <h1 className='sr-only'>Argent Bank</h1>

@@ -7,7 +7,7 @@ function Navbar() {
     return (
         // Si l'utilisateur n'est pas connecté
         <nav className='main-nav'>
-            <NavLink to='/' className='main-nav-logo'>
+            <NavLink to='/ArgentBank' className='main-nav-logo'>
                 <img
                     className='main-nav-logo-image'
                     src={logo}
